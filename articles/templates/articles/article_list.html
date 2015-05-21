@@ -6,10 +6,15 @@
 
 {% block container %}
 
+    {% for article in articles %}
     <div class="jumbotron">
-        <h3>Привет, мир!</h3>
-        <p>...</p>
-        <p><a class="btn btn-primary btn-lg" role="button">Узнать больше</a></p>
+        <h6> Дата публикации: {{ article.article_date }} </h6>
+        <h3>{{ article.article_title }} </h3>
+        <p> {{ article.article_text }} </p>
+        <p> Понравилось: {{ article.article_likes }} </p>
+        <p><a class="btn btn-primary btn-lg" href="{% url 'articles:article_detail' article.id %}" role="button">Читать</a></p>
     </div>
+    {% endfor %}
 
 {% endblock container %}
+

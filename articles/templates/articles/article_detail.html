@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+{% block nav_class_index %} active {% endblock %}
+
+
+{% block container %}
+
+    <h6> Дата публикации: {{ article.article_date }} </h6>
+    <h3>{{ article.article_title }} </h3>
+    <p> {{ article.article_text }} </p>
+    <p> Понравилось: {{ article.article_likes }} </p>
+    <hr>
+    <p>Комментарии</p>
+    {% for comment in comment %}
+        <p>{{ comment.comment_text }}</p>
+        <h6>{{ comment.comment_date }} Понравилось: {{ comment.comment_likes }}</h6>
+    {% endfor %}
+
+{% endblock container %}

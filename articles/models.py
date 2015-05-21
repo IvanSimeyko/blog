@@ -22,4 +22,4 @@ class Comment(models.Model):
     comment_text = models.TextField()
     comment_article = models.ForeignKey(Article)
     comment_date = models.DateTimeField(auto_now_add=True)
-    comment_likes = models.IntegerField(null=True, blank=True)
+    comment_likes = models.IntegerField(default=0)

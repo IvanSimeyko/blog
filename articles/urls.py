@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
-from articles.views import ArticleListView
+from articles.views import ArticleDetailView
 
 urlpatterns = patterns('',
-                       url(r'^$', ArticleListView.as_view(), name='article_list'),
-)
+                       url(r'^(?P<pk>\d+)/$', ArticleDetailView.as_view(), name='article_detail'),
+                       )
