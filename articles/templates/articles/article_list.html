@@ -4,16 +4,23 @@
 {% block nav_class_index %} active {% endblock %}
 
 
+{% load staticfiles %}
+
+
 {% block container %}
 
     {% for article in articles %}
-    <div class="jumbotron">
-        <h6> Дата публикации: {{ article.article_date }} </h6>
-        <h3>{{ article.article_title }} </h3>
-        <p> {{ article.article_text }} </p>
-        <p> Понравилось: {{ article.article_likes }} </p>
-        <p><a class="btn btn-primary btn-lg" href="{% url 'articles:article_detail' article.id %}" role="button">Читать</a></p>
-    </div>
+        <div class="jumbotron">
+            <h6> Дата публикации: {{ article.article_date }} </h6>
+            <h3>{{ article.article_title }} </h3>
+            <p> {{ article.article_text }} </p>
+            <p><a href="{% url 'articles:add_like' article.id %}">
+                    <img src="{% static 'likes.jpg' %}" width="15" height="15">
+                </a>
+                <small> {{ article.article_likes }} </small>
+            </p>
+            <p align="right"> <a class="btn btn-primary btn-sm" href="{% url 'articles:article_detail' article.id %}" role="button">Read more...</a></p>
+        </div>
     {% endfor %}
 
 {% endblock container %}

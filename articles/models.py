@@ -19,7 +19,7 @@ class Comment(models.Model):
     class Meta():
         db_table = 'comment'
 
-    comment_text = models.TextField()
+    comment_text = models.TextField(verbose_name='Comment text')
     comment_article = models.ForeignKey(Article)
     comment_date = models.DateTimeField(auto_now_add=True)
     comment_likes = models.IntegerField(default=0)
