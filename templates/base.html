@@ -9,7 +9,7 @@
         <meta name="author" content="">
         <link rel="icon" href="../../favicon.ico">
 
-        <title> {% block title %} Блог Ивана Симейко {% endblock title %} </title>
+        <title> {% block title %} Welcome to my block {% endblock title %} </title>
 
         <!-- Bootstrap core CSS -->
         {% load staticfiles %}
@@ -30,15 +30,23 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{% url 'home' %}">Blogs Ivan Simeyko</a>
+                <!--<a class="navbar-brand" href="{% url 'home' %}">Blogs Ivan Simeyko</a> -->
             </div>
             <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav nav-pills pull-right">
+                <ul class="nav nav-pills pull-left">
                     <li class="{% block nav_class_index %}{% endblock %}"><a href="{% url 'home' %}">Home</a></li>
                     <li class="{% block nav_class_engineering %}{% endblock %}"><a href="#contact">Проектирование</a></li>
                     <li class="{% block nav_class_programming %}{% endblock %}"><a href="#contact">Программирование</a></li>
                     <li class="{% block nav_class_about %}{% endblock %}"><a href="#about">Обо мне</a></li>
                     <li class="{% block nav_class_contact %}{% endblock %}"><a href="{% url 'contacts:create_contact' %}">Contacts</a></li>
+                </ul>
+                <ul class="nav nav-pills pull-right">
+                    {% if user.username %}
+                        <li><a href="{% url 'loginsys:log_out' %}"> Выйти {{ user.username }}</a></li>
+                    {% else %}
+                        <li><a href="{% url 'loginsys:log_in' %}"> Войти </a></li>
+                        <li><a href="{% url 'loginsys:register' %}"> Зарегистрироваться </a></li>
+                    {% endif %}
                 </ul>
             </div><!--/.nav-collapse -->
         </div>

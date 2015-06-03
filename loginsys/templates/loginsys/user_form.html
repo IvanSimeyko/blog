@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+
+{% block title %} Registration {% endblock title %}
+
+
+{% load staticfiles %}
+
+
+{% block container %}
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form class="form-horizontal" role="form" action="{% url 'loginsys:register' %}" method="post">
+        {% csrf_token %}
+
+        <table class="table table-responsive">
+            {{ form.as_table }}
+        </table>
+
+        <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-8">
+                <input class="btn btn-primary btn-sm" type="submit" value="Зарегестрироваться">
+            </div>
+        </div>
+
+    </form>
+
+{% endblock container %}

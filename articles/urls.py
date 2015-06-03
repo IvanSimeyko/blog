@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, url
 from articles.views import ArticleDetailView, add_like, add_comment
 
 urlpatterns = patterns('',

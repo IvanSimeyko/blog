@@ -22,7 +22,7 @@ class ContactCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(ContactCreateView, self).get_context_data(**kwargs)
-        context['page_title'] = u'Написать администратору сайта'
+        context['page_title'] = 'Написать автору сайта'
         return context
 
     def form_valid(self, form):

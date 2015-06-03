@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+
+{% block title %} Registration {% endblock title %}
+
+
+{% load staticfiles %}
+
+
+{% block container %}
+   <div class="form-group">
+        <form action="/auth/login/" method="post">
+            {% csrf_token %}
+            <label for='username'>Имя пользоваеля</label>
+            <input type="text" name="username" id='username'>
+            <label for='password'>Пароль</label>
+            <input type="password" name="password" id='password'>
+            {% if login_error %}
+                <label class="has-error">{{ login_error }}</label>
+            {% endif %}
+            <input class="button" type="submit" value="Войти">
+        </form>
+    </div>
+
+{% endblock container %}

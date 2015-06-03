@@ -31,11 +31,23 @@
         {% endfor %}
      </div>
 
+     {% if user.username %}
         <form action="/article/addcomment/{{ article.id }}/" method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <input type="Submit" class="btn" value="Добавить комментарий">
+            <table class="table table-responsive">
+                 {{ form.as_table }}
+            </table>
+
+            <div class="col-sm-offset-6 col-sm-6">
+            <input type="Submit" class="btn btn-primary btn-sm" value="Добавить комментарий">
+            </div>
         </form>
+     {% else %}
+         <div class="well well-sm">
+          <p> Чтобы иметь возможность комментировать данную статью пройдите, пожалуйста, легкую процедуру
+              <a href="{% url 'loginsys:register' %}">регистрации</a></p>
+     </div>
+    {% endif %}
     <p></p>
 
 

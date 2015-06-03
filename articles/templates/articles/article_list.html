@@ -9,8 +9,18 @@
 
 {% block container %}
 
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
     {% for article in articles %}
-        <div class="jumbotron">
+        <div class="well well-sm">
             <h6> Дата публикации: {{ article.article_date }} </h6>
             <h3>{{ article.article_title }} </h3>
             <p> {{ article.article_text }} </p>
@@ -22,6 +32,26 @@
             <p align="right"> <a class="btn btn-primary btn-sm" href="{% url 'articles:article_detail' article.id %}" role="button">Read more...</a></p>
         </div>
     {% endfor %}
+
+    <div class="pagination pagination-lg">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}">< previous</a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if num == page_obj.number %}
+                   <span class="current"><b>{{ num }}</b></span>
+                {% else %}
+                    <a href="?page={{ num }}"> {{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next ></a>
+            {% endif %}
+        </span>
+    </div>
 
 {% endblock container %}
 

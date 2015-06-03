@@ -1,4 +1,4 @@
-from models import Article, Comment
+from models import Article
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.core.exceptions import ObjectDoesNotExist
@@ -6,12 +6,19 @@ from django.http.response import Http404
 from django.shortcuts import redirect
 from forms import CommentForm
 from django.contrib import messages
+from django.core.context_processors import csrf
+from django.contrib import auth
 
 
 class ArticleListView(ListView):
     model = Article
-    paginate_by = 7
+    paginate_by = 2
     context_object_name = 'articles'
+
+    def get_context_data(self, **kwargs):
+        context = super(ArticleListView, self).get_context_data(**kwargs)
+        context['username'] = auth.get_user
+        return context
 
 
 class ArticleDetailView(DetailView):
@@ -19,10 +26,12 @@ class ArticleDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ArticleDetailView, self).get_context_data(**kwargs)
+        context.update(csrf(request=True))
         article = self.get_object()
         context['comment'] = article.comment_set.all()
-        coment_form = CommentForm
-        context['form'] = coment_form
+        comment_form = CommentForm
+        context['form'] = comment_form
+        context['username'] = auth.get_user
         return context
 
 
