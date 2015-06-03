@@ -17,6 +17,7 @@ class ArticleListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
+        #context['articles'] = Article.objects.all().order_by('-article_date')
         context['username'] = auth.get_user
         return context
 
@@ -60,6 +61,7 @@ def add_comment(request, pk):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.comment_article = Article.objects.get(id=pk)
+            comment.comment_name_id = auth.get_user(request).id
             form.save()
             messages.success(request, "Comment successfully added")
             request.session.set_expiry(60)

@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 
 
-{% block nav_class_index %} active {% endblock %}
-
 
 {% block container %}
 
@@ -25,6 +23,7 @@
 
      <div class="col-lg-offset-1">
         {% for comment in comment %}
+            <h5> {{ comment.comment_name.username }}</h5>
             <p>{{ comment.comment_text }}</p>
             <h6>{{ comment.comment_date }} Понравилось: {{ comment.comment_likes }}</h6>
             <hr>
@@ -32,7 +31,7 @@
      </div>
 
      {% if user.username %}
-        <form action="/article/addcomment/{{ article.id }}/" method="post">
+        <form action="{% url 'articles:add_comment' article.id %}" method="post">
             {% csrf_token %}
             <table class="table table-responsive">
                  {{ form.as_table }}

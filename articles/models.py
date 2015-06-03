@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.contrib.auth.models import User
 #import PIL
 
 
@@ -20,6 +21,7 @@ class Comment(models.Model):
     class Meta():
         db_table = 'comment'
 
+    comment_name = models.ForeignKey(User)
     comment_text = models.TextField(verbose_name='Текст комментария')
     comment_article = models.ForeignKey(Article)
     comment_date = models.DateTimeField(auto_now_add=True)
