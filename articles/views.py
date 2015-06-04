@@ -12,12 +12,17 @@ from django.contrib import auth
 
 class ArticleListView(ListView):
     model = Article
-    paginate_by = 2
+    paginate_by = 7
     context_object_name = 'articles'
+
+    def get_queryset(self):
+        qs = super(ArticleListView, self).get_queryset()    # get origin queryset Article
+        qs = qs.order_by('id').reverse()
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
-        #context['articles'] = Article.objects.all().order_by('-article_date')
+        #context['articles'] = Article.objects.all().order_by('id').reverse()
         context['username'] = auth.get_user
         return context
 
