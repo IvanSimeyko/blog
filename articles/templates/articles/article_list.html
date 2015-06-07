@@ -22,8 +22,11 @@
     {% for article in articles %}
         <div class="well well-sm">
             <h6> Дата публикации: {{ article.article_date }} </h6>
+            {% if article.article_modified_date %}
+                <h6> Дата изменения: {{ article.article_modified_date}} </h6>
+            {% endif %}
             <h3>{{ article.article_title }} </h3>
-            <p> {{ article.article_text }} </p>
+            <p> {{ article.article_short_description }} </p>
             <p><a href="{% url 'articles:add_like' article.id %}">
                     <img src="{% static 'likes.jpg' %}" width="15" height="15">
                 </a>

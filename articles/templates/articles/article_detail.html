@@ -4,8 +4,11 @@
 
 {% block container %}
 
-    <h6> Дата публикации: {{ article.article_date }} </h6>
-    <h3>{{ article.article_title }} </h3>
+    <h6> Дата создания публикации: {{ article.article_date }} </h6>
+    {% if article.article_modified_date %}
+        <h6> Дата изменения: {{ article.article_modified_date}} </h6>
+    {% endif %}
+    <h3> {{ article.article_title }} </h3>
     <p> {{ article.article_text }} </p>
     <p> Понравилось: {{ article.article_likes }} </p>
     <hr>

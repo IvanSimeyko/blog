@@ -4,7 +4,7 @@ from models import Article, Comment
 
 class ArticleInline(admin.StackedInline):
     model = Comment
-    extra = 3
+    extra = 1
 
 
 class ArticleAdmin(admin.ModelAdmin):

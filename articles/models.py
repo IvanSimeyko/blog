@@ -10,9 +10,12 @@ class Article(models.Model):
         db_table = 'article'
 
     article_title = models.CharField(max_length=100)
+    article_short_description = models.CharField(max_length=150)
     #article_image = models.ImageField(null=True, blank=True)
     article_text = models.TextField()
     article_date = models.DateTimeField(auto_now_add=True)
+    article_modified_date = models.DateTimeField(auto_now=True)
+    article_publish = models.BooleanField(default=True)
     article_likes = models.IntegerField(default=0)
 
 
