@@ -4,11 +4,18 @@ from django.contrib.auth.models import User
 #import PIL
 
 
+class Tag(models.Model):
+    slug = models.SlugField(max_length=200, unique=True)
+
+    def __str__(self):
+        return self.slug
+
+
+class EntryQuerySet(models.QuerySet):
+    def published(self):
+        return self.filter(publish=True)
+
 class Article(models.Model):
-
-    class Meta():
-        db_table = 'article'
-
     article_title = models.CharField(max_length=100)
     article_short_description = models.CharField(max_length=150)
     #article_image = models.ImageField(null=True, blank=True)
@@ -17,6 +24,15 @@ class Article(models.Model):
     article_modified_date = models.DateTimeField(auto_now=True)
     article_publish = models.BooleanField(default=True)
     article_likes = models.IntegerField(default=0)
+    article_tags = models.ManyToManyField(Tag)
+
+    objects = EntryQuerySet.as_manager()
+
+    class Meta():
+        db_table = 'article'
+        ordering = ['-article_date']
+        verbose_name = 'Blog Entry'
+        verbose_name_plural = "Blog Entries"
 
 
 class Comment(models.Model):
