@@ -3,7 +3,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.core.exceptions import ObjectDoesNotExist
 from django.http.response import Http404
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render_to_response
 from forms import CommentForm
 from django.contrib import messages
 from django.core.context_processors import csrf
@@ -11,6 +11,7 @@ from django.contrib import auth
 
 
 class ArticleListView(ListView):
+    queryset = Article.objects.published()
     model = Article
     paginate_by = 7
     context_object_name = 'articles'

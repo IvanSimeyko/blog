@@ -1,1 +1,4 @@
-django == 1.7
+Django==1.7.7
+argparse==1.2.1
+django-markdown==0.8.4
+wsgiref==0.1.2

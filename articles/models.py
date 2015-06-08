@@ -11,9 +11,10 @@ class Tag(models.Model):
         return self.slug
 
 
-class EntryQuerySet(models.QuerySet):
+class ArticleQuerySet(models.QuerySet):
     def published(self):
-        return self.filter(publish=True)
+        return self.filter(article_publish=True)
+
 
 class Article(models.Model):
     article_title = models.CharField(max_length=100)
@@ -26,13 +27,13 @@ class Article(models.Model):
     article_likes = models.IntegerField(default=0)
     article_tags = models.ManyToManyField(Tag)
 
-    objects = EntryQuerySet.as_manager()
+    objects = ArticleQuerySet.as_manager()
 
     class Meta():
         db_table = 'article'
         ordering = ['-article_date']
-        verbose_name = 'Blog Entry'
-        verbose_name_plural = "Blog Entries"
+        verbose_name = 'Article'
+        verbose_name_plural = "Articles"
 
 
 class Comment(models.Model):

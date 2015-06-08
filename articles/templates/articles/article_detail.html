@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
 
+{% load staticfiles %}
 
+{% load django_markdown %}
 
 {% block container %}
 
-    <h6> Дата создания публикации: {{ article.article_date }} </h6>
-    {% if article.article_modified_date %}
-        <h6> Дата изменения: {{ article.article_modified_date}} </h6>
-    {% endif %}
+    <h6> Дата публикации: {{ article.article_date }} </h6>
     <h3> {{ article.article_title }} </h3>
-    <p> {{ article.article_text }} </p>
-    <p> Понравилось: {{ article.article_likes }} </p>
+    <h6> {{ article.article_tags.all|join:", "  }} </h6>
+    <p> {{ article.article_text|markdown }} </p>
+    <p><img src="{% static 'likes.jpg' %}" width="15" height="15">
+        <small>{{ article.article_likes }}</small></p>
     <hr>
     <p>Комментарии:</p>
 
@@ -24,14 +25,18 @@
         </ul>
     {% endif %}
 
-     <div class="col-lg-offset-1">
+    {% if comment %}
+    <div class="col-lg-offset-1">
         {% for comment in comment %}
-            <h5> {{ comment.comment_name.username }}</h5>
+            <h5><b>{{ comment.comment_name.username }}</b></h5>
+            <h6>{{ comment.comment_date }}</h6>
             <p>{{ comment.comment_text }}</p>
-            <h6>{{ comment.comment_date }} Понравилось: {{ comment.comment_likes }}</h6>
             <hr>
         {% endfor %}
      </div>
+        {% else %}
+        <p>Пока нет комментариев...</p>
+     {% endif %}
 
      {% if user.username %}
         <form action="{% url 'articles:add_comment' article.id %}" method="post">
@@ -46,8 +51,8 @@
         </form>
      {% else %}
          <div class="well well-sm">
-          <p> Чтобы иметь возможность комментировать данную статью пройдите, пожалуйста, легкую процедуру
-              <a href="{% url 'loginsys:register' %}">регистрации</a></p>
+          <p> Чтобы иметь возможность комментировать данную статью Вам необходимо
+              <a href="{% url 'loginsys:log_in' %}">войти</a></p>
      </div>
     {% endif %}
 
