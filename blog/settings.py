@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'contacts',
     'loginsys',
     'django_markdown',
+    'foundations',
 )
 
 MIDDLEWARE_CLASSES = (

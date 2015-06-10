@@ -38,6 +38,9 @@
 
      <div class="well well-sm">
         <p> Eсли у Вас еще нет аккаунта пройдите, пожалуйста, легкую процедуру
-            <a href="{% url 'loginsys:register' %}">регистрации</a></p>
+            <a href="{% url 'loginsys:register' %}">регистрации.</a></p>
+        <p> Eсли Вы забыли данные для входа на сайт
+            <a href="{% url 'contacts:create_contact' %}">сконтактируйте</a>
+            меня и я вышлю их Вам на электронную почту.</p>
      </div>
 {% endblock container %}

@@ -18,7 +18,7 @@ class ArticleQuerySet(models.QuerySet):
 
 class Article(models.Model):
     article_title = models.CharField(max_length=100)
-    article_short_description = models.CharField(max_length=150)
+    article_short_description = models.TextField()
     #article_image = models.ImageField(null=True, blank=True)
     article_text = models.TextField()
     article_date = models.DateTimeField(auto_now_add=True)

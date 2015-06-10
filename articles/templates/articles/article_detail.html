@@ -6,7 +6,7 @@
 
 {% block container %}
 
-    <h6> Дата публикации: {{ article.article_date }} </h6>
+    <h6> Дата публикации: {{ article.article_date|date:"D d N Y"  }} </h6>
     <h3> {{ article.article_title }} </h3>
     <h6> {{ article.article_tags.all|join:", "  }} </h6>
     <p> {{ article.article_text|markdown }} </p>
