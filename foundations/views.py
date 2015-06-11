@@ -90,13 +90,16 @@ def foundation_results(request):
             moment = form.cleaned_data.get('moment')
             resistance_soil = form.cleaned_data.get('resistance_soil')
 
-            weight_foundations = '\n\n Вес фундамента: %.2f' % weight_found(width_foundation, length_foundation,
+            weight_found = weight_found(width_foundation, length_foundation,
                                  depth_foundation, width_bucket, length_bucket, height_above_ground)
-            load_in_foundations = load_in_found(vertical_force, weight_found,
-                                 horizontal_force, moment, depth_foundation, height_above_ground)
+
+            load_in_foundations = load_in_found(vertical_force, weight_found(width_foundation, length_foundation,
+                                                depth_foundation, width_bucket, length_bucket, height_above_ground),
+                                                horizontal_force, moment, depth_foundation, height_above_ground)
 
             return render(request, "foundation-result.html",
-                          {'form': form, 'weight_foundations': weight_foundations, 'load_in_foundations': load_in_foundations})
+                          {'form': form, 'weight_foundations': weight_foundations,
+                                         'load_in_foundations': load_in_foundations, })
         else:
             return render(request, "foundation-result.html", {'form': form})
     else:
