@@ -71,8 +71,12 @@ def pressure(load_in_found, geometry, eccentricity, length_foundation, width_fou
                 return '\n \n '
     else:
         max_eccentricity = 0.25 * length_foundation
-        return '\n \n Эксцентриситет больше предльного значения\
-        (чертверть длины фундамента = %.2f). Увелитьте размеры фундаменты!' % max_eccentricity
+        return '\n \n Эксцентриситет = %.2f больше предельного значения\
+        (чертверть длины фундамента). Увелитьте размеры фундаменты!' % max_eccentricity
+
+def conclusion(pressure, resistance_soil):
+    if len(pressure) == 3:
+        pass
 
 
 def foundation_results(request):
@@ -90,16 +94,25 @@ def foundation_results(request):
             moment = form.cleaned_data.get('moment')
             resistance_soil = form.cleaned_data.get('resistance_soil')
 
-            weight_found = weight_found(width_foundation, length_foundation,
+            weight_foundations = weight_found(width_foundation, length_foundation,
                                  depth_foundation, width_bucket, length_bucket, height_above_ground)
 
             load_in_foundations = load_in_found(vertical_force, weight_found(width_foundation, length_foundation,
                                                 depth_foundation, width_bucket, length_bucket, height_above_ground),
                                                 horizontal_force, moment, depth_foundation, height_above_ground)
 
+            geometry_foundations = geometry(width_foundation, length_foundation)
+
+            eccentricity_foundations = eccentricity(load_in_foundations)
+
+            pressure_foundations = pressure(load_in_foundations, geometry_foundations, eccentricity_foundations,
+                                            length_foundation, width_foundation)
+
             return render(request, "foundation-result.html",
                           {'form': form, 'weight_foundations': weight_foundations,
-                                         'load_in_foundations': load_in_foundations, })
+                                         'load_in_foundations': load_in_foundations,
+                                         'geometry_foundations': geometry_foundations,
+                                         'eccentricity_foundations': eccentricity_foundations,})
         else:
             return render(request, "foundation-result.html", {'form': form})
     else:
