@@ -1,24 +1,28 @@
 {% extends 'base.html' %}
 
 
+{% load staticfiles %}
+
+
 {% block title %}Проверка напряжений под подошвой фундамента{% endblock title %}
 
 
 {% block container %}
 <h3>Проверка напряжений под подошвой фундамента при действии изгибающего момента в одном направлении</h3>
-<br />
 
-<form method = 'get'>
-
+    <p><img src="{% static 'img/fund.jpg' %}" width="750" height="400"></p>
+    <form method = 'get'>
         <table class="table table-responsive">
             {{ form.as_table }}
         </table>
+        <input type="Submit" value="Вычислить">
+    </form>
 
-    <input type="Submit" value="Вычислить">
-</form>
-
-<br />
-{{ weight_foundations }} <br/>
-{{ load_in_foundations }}
+    <br />
+    {{ weight_foundations }} <br/> <br/>
+    {{ load_in_foundations }} <br/> <br/>
+    {{ eccentricity_foundations }} <br/> <br/>
+    {{ pressure_foundations|linebreaks }} <br/> <br/>
+    {{ e }}
 
 {% endblock container %}
