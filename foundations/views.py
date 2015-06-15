@@ -4,20 +4,16 @@ from django import forms
 
 
 class QuadraticForm(forms.Form):
-    b = forms.FloatField(label="Ширина фундамента(м),  B = ")
-    l = forms.FloatField(label="Длина фундамента (м),  L = ")
-    h = forms.FloatField(label="Глубина заложения (м),  h = ")
-    x = forms.FloatField(label="Ширина подколонника (м),  x = ")
-    y = forms.FloatField(label="Длина подколонника (м),  y = ")
-    h1 = forms.FloatField(label="Высота подколонника над землей (м), h1 = ")
-    N = forms.FloatField(label="Вертикальная нагрузка (т),  N = ")
-    Q = forms.FloatField(label="Горизонтальная нагрузка (т),  Q = ")
-    M = forms.FloatField(label="Момент (тм),  M = ")
-    R = forms.FloatField(label="Расчетное сопротивление основания фундамента (т/м2),  R =")
-    epurs = forms.ChoiceField(label="Допускаемая форма эпюры давления фундаментов",
-                              choices=(('1', 'трапецевидная с pmin/pmax >= 0.25'),
-                                      ('2', 'треугольная без отрыва подошвы'),
-                                      ('3', 'треугольная с отрывом подошвы'),))
+    width_foundation = forms.FloatField(label="Ширина фундамента(м)")
+    length_foundation = forms.FloatField(label="Длина фундамента (м)")
+    depth_foundation = forms.FloatField(label="Глубина заложения (м)")
+    width_bucket = forms.FloatField(label="Ширина подколонника (м)")
+    length_bucket = forms.FloatField(label="Длина подколонника (м)")
+    height_above_ground = forms.FloatField(label="Высота подколонника над землей (м)")
+    vertical_force = forms.FloatField(label="Вертикальная нагрузка (т)")
+    horizontal_force = forms.FloatField(label="Горизонтальная нагрузка (т)")
+    moment = forms.FloatField(label="Момент (тм)")
+    resistance_soil = forms.FloatField(label="Расчетное сопротивление основания фундамента (т/м2)")
 
     def clean(self):
         data = self.cleaned_data
@@ -27,112 +23,83 @@ class QuadraticForm(forms.Form):
 
 
 # weight of the foundation
-def weight_found(b, l, h, x, y, h1):
-    weight = b*l*h*2 + x*y*h1*2.75
+def weight_found(width_foundation, length_foundation, depth_foundation,
+                 width_bucket, length_bucket, height_above_ground):
+    weight = width_foundation*length_foundation*depth_foundation*2 +\
+        width_bucket*length_bucket*height_above_ground*2.75
     return weight
 
 
-def load_in_found(N, Q, b, l, h, x, y, h1, M):
-    vertical_load = N + weight_found(b, l, h, x, y, h1)
-    moment = M + Q*(h+h1)
+def load_in_found(vertical_force, weight_found,
+                  horizontal_force, moment, depth_foundation, height_above_ground):
+    vertical_load = vertical_force + weight_found
+    moment = moment + horizontal_force*(depth_foundation+height_above_ground)
     return vertical_load, moment
 
 
-def geometry(b, l):
-    square = b*l
-    resistance_moment = b*l**2 / 6
+def geometry(width_foundation, length_foundation):
+    square = width_foundation*length_foundation
+    resistance_moment = width_foundation*length_foundation**2 / 6
     return square, resistance_moment
 
 
-def eccentricity(N, Q, b, l, h, x, y, h1, M):
-    eccentricity = load_in_found(N, Q, b, l, h, x, y, h1, M)[1] / load_in_found(N, Q, b, l, h, x, y, h1, M)[0]
+def eccentricity(load_in_found):
+    eccentricity = load_in_found[1] / load_in_found[0]
     return eccentricity
 
 
-def pressure(N, Q, b, l, h, x, y, h1, M, R):
-    if eccentricity(N, Q, b, l, h, x, y, h1, M) <= 0.25*l:
-        if eccentricity(N, Q, b, l, h, x, y, h1, M) < l/6:
-            pressure_max = load_in_found(N, Q, b, l, h, x, y, h1, M)[0]/geometry(b, l)[0] + \
-                           load_in_found(N, Q, b, l, h, x, y, h1, M)[1]/geometry(b, l)[1]
-            pressure_min = load_in_found(N, Q, b, l, h, x, y, h1, M)[0]/geometry(b, l)[0] - \
-                           load_in_found(N, Q, b, l, h, x, y, h1, M)[1]/geometry(b, l)[1]
-            pressure_soil = pressure_max / geometry(b, l)[0]
-            if pressure_soil <= 1.2 * R:
-                text = 'Эпюра давления под подошвой фундамента имеет трапецивидный вид. \n \
-                       Максимальное краевое давление pmax = %.2f (т/м2); минимальное pmin = %.2f (т/м2)' \
-                       % (pressure_max, pressure_min)
-                return text
-            else:
-                return '\n \n Максимальное напряжение pmax = %.2f (т/м2) превышает допустимое Rmax = %.2f (т/м2).\
-                Увеличьте размеры фундамента' % (pressure_max, 1.2*R)
-
-        elif eccentricity(N, Q, b, l, h, x, y, h1, M) == l/6:
-            pressure_max = load_in_found(N, Q, b, l, h, x, y, h1, M)[0]/geometry(b, l)[0] + \
-                           load_in_found(N, Q, b, l, h, x, y, h1, M)[1]/geometry(b, l)[1]
-            pressure_soil = pressure_max / geometry(b, l)[0]
-            if pressure_soil <= 1.2 * R:
-                return '\n \n Эпюра давления под подошвой фундамента имеет треугольный вид.\
-                Максимальное краевое давление pmax = %.2f (т/м2); pmin = 0' % pressure_max
-            else:
-                return '\n \n Максимальное напряжение pmax = %.2f (т/м2) превышает допустимое Rmax = %.2f (т/м2).\
-                Увеличьте размеры фундамента' % (pressure_max, 1.2*R)
-
-        elif l/6 < eccentricity(N, Q, b, l, h, x, y, h1, M) < l/4:
-            c0 = l/2 - eccentricity(N, Q, b, l, h, x, y, h1, M)
-            gap_found = l-(3*c0)
-            pressure_max = 2*load_in_found(N, Q, b, l, h, x, y, h1, M)[0] / (3*b*c0)
-            pressure_soil = pressure_max / geometry(b, l)[0]
-            if pressure_soil <= 1.2 * R:
+def pressure(load_in_found, geometry, eccentricity, length_foundation, width_foundation):
+    if eccentricity <= 0.25*length_foundation:
+        if eccentricity < length_foundation/1.6:
+            pressure_max = load_in_found[0]/geometry[0] + load_in_found[1]/geometry[1]
+            pressure_min = load_in_found[0]/geometry[0] - load_in_found[1]/geometry[1]
+            return '\n \n Эпюра давления под подошвой фундамента имеет трапецивидный вид.\
+            Максимальное краевое давление pmax = %.2f; pmin = %.2f' % (pressure_max, pressure_min)
+        elif eccentricity == length_foundation/1.6:
+            pressure_max = load_in_found[0]/geometry[0] + load_in_found[1]/geometry[1]
+            pressure_min = load_in_found[0]/geometry[0] - load_in_found[1]/geometry[1]
+            return '\n \n Эпюра давления под подошвой фундамента имеет треугольный вид.\
+            Максимальное краевое давление pmax = %.2f; pmin = %.2f' % (pressure_max, pressure_min)
+        elif eccentricity > length_foundation/1.6:
+            c0 = length_foundation/2 - eccentricity
+            if c0 <= length_foundation:
+                pressure_max = 2*load_in_found[0] / (3*width_foundation*c0)
                 return '\n \n Эпюра давления под подошвой имеет треугольную форму (имеется отрыв фундамента.\
-                       Максимальное краевое давление pmax=%.2f. (т/м2) \n \
-                       Величина отрыва подошвы фундамента Со = %.2f' % (pressure_max, gap_found)
+                Максимальное краевое давление pmax=%.2f.\n \
+                Величина отрыва подошвы фундамента Со = %.2f' % (pressure_max, c0)
             else:
-                return '\n \n Максимальное напряжение pmax = %.2f (т/м2) превышает допустимое Rmax = %.2f (т/м2).\
-                Увеличьте размеры фундамента' % (pressure_max, 1.2*R)
-
+                return '\n \n '
     else:
-        max_eccentricity = 0.25 * l
-        return '\n \n Эксцентриситет = %.2f больше предельного значения\
-        (%.2f). Увеличьте размеры фундаменты!' % (eccentricity(N, Q, b, l, h, x, y, h1, M), max_eccentricity)
+        max_eccentricity = 0.25 * length_foundation
+        return '\n \n Эксцентриситет больше предльного значения\
+        (чертверть длины фундамента = %.2f). Увелитьте размеры фундаменты!' % max_eccentricity
 
 
 def foundation_results(request):
     if request.GET:
         form = QuadraticForm(request.GET)
         if form.is_valid():
-            b = form.cleaned_data.get('b')
-            l = form.cleaned_data.get('l')
-            h = form.cleaned_data.get('h')
-            x = form.cleaned_data.get('x')
-            y = form.cleaned_data.get('y')
-            h1 = form.cleaned_data.get('h1')
-            N = form.cleaned_data.get('N')
-            Q = form.cleaned_data.get('Q')
-            M = form.cleaned_data.get('M')
-            R = form.cleaned_data.get('R')
-            epurs = form.cleaned_data.get('epurs')
+            width_foundation = form.cleaned_data.get('width_foundation')
+            length_foundation = form.cleaned_data.get('length_foundation')
+            depth_foundation = form.cleaned_data.get('depth_foundation')
+            width_bucket = form.cleaned_data.get('width_bucket')
+            length_bucket = form.cleaned_data.get('length_bucket')
+            height_above_ground = form.cleaned_data.get('height_above_ground')
+            vertical_force = form.cleaned_data.get('vertical_force')
+            horizontal_force = form.cleaned_data.get('horizontal_force')
+            moment = form.cleaned_data.get('moment')
+            resistance_soil = form.cleaned_data.get('resistance_soil')
 
-            weight_foundations = '\n \n \n Вес фундамента = %.2f (т)' % weight_found(b, l, h, x, y, h1)
+            weight_found = weight_found(width_foundation, length_foundation,
+                                 depth_foundation, width_bucket, length_bucket, height_above_ground)
 
-            load_in_foundations = '\n \n \n Нагрузка на обрезе фундамента N = {} (т), M = {} (тм)' \
-                                  .format(load_in_found(N, Q, b, l, h, x, y, h1, M)[0],
-                                          load_in_found(N, Q, b, l, h, x, y, h1, M)[1])
+            load_in_foundations = load_in_found(vertical_force, weight_found(width_foundation, length_foundation,
+                                                depth_foundation, width_bucket, length_bucket, height_above_ground),
+                                                horizontal_force, moment, depth_foundation, height_above_ground)
 
-            geometry_foundations = geometry(b, l)
-
-            eccentricity_foundations = '\n \n \n Относительный эксцентриситет приложения нагружки %.2f'\
-                                       % eccentricity(N, Q, b, l, h, x, y, h1, M)
-
-            pressure_foundations = pressure(N, Q, b, l, h, x, y, h1, M, R)
-
-            e = epurs
             return render(request, "foundation-result.html",
                           {'form': form, 'weight_foundations': weight_foundations,
-                                         'load_in_foundations': load_in_foundations,
-                                         'geometry_foundations': geometry_foundations,
-                                         'eccentricity_foundations': eccentricity_foundations,
-                                         'pressure_foundations': pressure_foundations,
-                                         'e': e})
+                                         'load_in_foundations': load_in_foundations, })
         else:
             return render(request, "foundation-result.html", {'form': form})
     else:
