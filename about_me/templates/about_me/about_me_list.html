@@ -11,8 +11,8 @@
 {% block container %}
 
     {% for me in about_me %}
-        <div class="well">
-            <h6> {{ me.info|markdown  }} </h6>
-        </div>
+        <p>
+           {{ me.info|markdown  }}
+        </p>
     {% endfor %}
 {% endblock container %}
