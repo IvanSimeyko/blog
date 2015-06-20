@@ -37,7 +37,7 @@
                     <li class="{% block nav_class_index %}{% endblock %}"><a href="{% url 'home' %}">Home</a></li>
                     <li class="{% block nav_class_engineering %}{% endblock %}"><a href="#contact">Проектирование</a></li>
                     <li class="{% block nav_class_programming %}{% endblock %}"><a href="#contact">Программирование</a></li>
-                    <li class="{% block nav_class_about %}{% endblock %}"><a href="#about">Обо мне</a></li>
+                    <li class="{% block nav_class_about %}{% endblock %}"><a href="{% url 'about_me:me' %}">About me</a></li>
                     <li class="{% block nav_class_contact %}{% endblock %}"><a href="{% url 'contacts:create_contact' %}">Contacts</a></li>
                 </ul>
                 <ul class="nav nav-pills pull-right">
@@ -55,30 +55,23 @@
     <div class="container-fluid">
         <div class="container">
             <div class="row">
-                <div class="col-sm-8 blog-main">
+                <div class="col-sm-9 blog-main">
                     {% block container %}
                     {% endblock container %}
                 </div>
 
-                <div class="col-sm-4 blog-main">
+                <div class="col-sm-3 blog-main">
                     {% block container_right %}
-                    <div class="media">
-                        <a class="pull-left">
-                            <img class="media-object" src="{% static 'img/ivan.jpg' %}" width = '50' height="50" alt="my_photo">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <h5 class="media-heading">Здравствуйте,</h5>
-                        меня зовут, Иван Симейко. Я являюсь инженером-строителем - занимаюсь проектированием железобетонных
-                        и металлических конструкций. В свободное от работы время увлекаюсь программированием на языке
-                        Python. В процессе работы мне приходится постоянно учиться и постигать что-то новое, поэтому чтобы
-                        не возвращаться к пройденому материалу и не наступать на одни и теже грабли на данном сайте я
-                        буду собирать материалы касающиеся проектирования строительных конструкций и программирования на Python.
-                        Если это если это заинтересует еще кого-то или поможет кому-то еще избежать ошибок и научиться чему-то
-                        новому, буду только рад. Чтобы связаться со мной, напишите мне сообщение в контактной форме перейдя на
-                        страницу "Контакты",я обязательно отвечу. Там же вы сможете найти и другую информацию, для связи со смной.
-                        Приятного времяпрепровождения на моем сайте.
-                    </div>
+                        <h5> <strong> Обо мне: </strong></h5>
+                            <div class="media">
+                                <a class="pull-left">
+                                    <img class="media-object" src="{% static 'img/ivan.jpg' %}"
+                                         width = '50' height="50" alt="my_photo">
+                                </a>
+                                <h5> Посмотреть информацию</h5>
+                            </div>
+
+
                     {% endblock container_right %}
                 </div>
             </div>

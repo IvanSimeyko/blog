@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %} About_me {% endblock title %}
+
+{% block nav_class_about %} active {% endblock %}
+
+{% load staticfiles %}
+
+{% load django_markdown %}
+
+{% block container %}
+
+    {% for me in about_me %}
+        <div class="well">
+            <h6> {{ me.info|markdown  }} </h6>
+        </div>
+    {% endfor %}
+{% endblock container %}

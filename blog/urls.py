@@ -10,4 +10,5 @@ urlpatterns = patterns('',
     url(r'^contact/', include('contacts.urls', namespace="contacts")),
     url(r'^auth/', include('loginsys.urls', namespace="loginsys")),
     url(r'^foundation/', include('foundations.urls', namespace="foundation")),
+    url(r'^about_me/', include('about_me.urls', namespace="about_me")),
     )

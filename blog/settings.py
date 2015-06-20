@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'loginsys',
     'django_markdown',
     'foundations',
+    'about_me',
 )
 
 MIDDLEWARE_CLASSES = (
