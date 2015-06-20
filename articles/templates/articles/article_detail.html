@@ -10,7 +10,7 @@
     <h3> {{ article.article_title }} </h3>
     <h6> {{ article.article_tags.all|join:", "  }} </h6>
     <p> {{ article.article_text|markdown }} </p>
-    <p><img src="{% static 'likes.jpg' %}" width="15" height="15">
+    <p><img src="{% static 'img/likes.jpg' %}" width="15" height="15">
         <small>{{ article.article_likes }}</small></p>
     <hr>
     <p>Комментарии:</p>

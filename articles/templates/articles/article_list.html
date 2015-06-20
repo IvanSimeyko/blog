@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
 
-
 {% block nav_class_index %} active {% endblock %}
 
+{% load django_markdown %}
 
 {% load staticfiles %}
-
 
 {% block container %}
 
@@ -20,18 +19,20 @@
     {% endif %}
 
     {% for article in articles %}
-        <div class="well well-sm">
-            <h6> Дата публикации: {{ article.article_date|date:"D d N Y"  }} </h6>
+        <div class="well">
+            <h6> Дата публикации: {{ article.article_date|date:"d N Y"  }} </h6>
             <h3>{{ article.article_title }}</h3>
-            <p>{{ article.article_short_description }}</p>
-            <p><a href="{% url 'articles:add_like' article.id %}">
-                <img src="{% static 'likes.jpg' %}" width="15" height="15">
+            <p> {{ article.article_tags.all|join:', ' }} <p>
+            <p>{{ article.article_short_description|markdown }}</p>
+            <p>
+                <a href="{% url 'articles:add_like' article.id %}">
+                    <img class="pull-left" src="{% static 'img/likes.jpg' %}" width="17" height="17">
                 </a>
                 <small> {{ article.article_likes }} </small>
-            </p>
-            <p align="right">
-                <a class="btn btn-primary btn-sm" href="{% url 'articles:article_detail' article.id %}" role="button">
+
+                <a class="btn btn-primary pull-right" href="{% url 'articles:article_detail' article.id %}" role="button">
                     Read more...</a>
+
             </p>
         </div>
     {% endfor %}
