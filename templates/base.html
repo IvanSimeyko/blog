@@ -22,7 +22,7 @@
   <body>
 
     <nav class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
+        <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
@@ -63,13 +63,14 @@
                 <div class="col-sm-3 blog-main">
                     {% block container_right %}
                         <h5> <strong> Обо мне: </strong></h5>
-                            <div class="media">
-                                <a class="pull-left">
-                                    <img class="media-object" src="{% static 'img/ivan.jpg' %}"
-                                         width = '50' height="50" alt="my_photo">
-                                </a>
-                                <h5> <a href="{% url 'about_me:me' %}"> Посмотреть информацию </a></h5>
-                            </div>
+                        <div class="media">
+                            <a class="pull-left">
+                                <img class="media-object" src="{% static 'img/ivan.jpg' %}"
+                                     width = '50' height="50" alt="my_photo">
+                            </a>
+                            <h5> <a href="{% url 'about_me:me' %}"> Посмотреть информацию </a></h5>
+                        </div>
+                        <hr>
 
 
                     {% endblock container_right %}

@@ -16,6 +16,7 @@ class ArticleAdmin(MarkdownModelAdmin):
     inlines = [ArticleInline]
     list_filter = ['article_date']
     formfield_overrides = {TextField: {'widget': AdminMarkdownWidget}}
+    #prepopulated_fields = {'article_slug': ('article_title',)}
 
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Tag)

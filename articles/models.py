@@ -26,6 +26,7 @@ class Article(models.Model):
     article_publish = models.BooleanField(default=True)
     article_likes = models.IntegerField(default=0)
     article_tags = models.ManyToManyField(Tag)
+    #article_slug = models.SlugField(max_length=25, default='ivan')
 
     objects = ArticleQuerySet.as_manager()
 
