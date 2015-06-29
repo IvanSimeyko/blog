@@ -4,8 +4,15 @@ from django.contrib.auth.models import User
 #import PIL
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=100, null=True, blank=True)
+
+    def __unicode__(self):
+        return self.name
+
+
 class Tag(models.Model):
-    slug = models.SlugField(max_length=200, unique=True)
+    slug = models.SlugField(max_length=200, unique=True, null=True, blank=True)
 
     def __str__(self):
         return self.slug
@@ -19,6 +26,7 @@ class ArticleQuerySet(models.QuerySet):
 class Article(models.Model):
     article_title = models.CharField(max_length=100)
     article_short_description = models.TextField()
+    category = models.ForeignKey(Category)
     #article_image = models.ImageField(null=True, blank=True)
     article_text = models.TextField()
     article_date = models.DateTimeField(auto_now_add=True)

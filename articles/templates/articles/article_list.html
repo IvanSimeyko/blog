@@ -20,9 +20,17 @@
 
     {% for article in articles %}
         <div class="well">
-            <h6> Дата публикации: {{ article.article_date|date:"d N Y"  }} </h6>
+            <h6> Дата публикации: {{ article.article_date|date:"d N Y" }} </h6>
+
             <h3>{{ article.article_title }}</h3>
-            <p> {{ article.article_tags.all|join:', ' }} <p>
+
+            <div class="tags"> tags:
+                {% for tag in article.article_tags.all %} <!-- делаем проход по нашим тегам -->
+                    <a href="tag/{{ tag }}/">{{ tag }}</a> <!-- выводим их на экран -->
+                            <!-- ставим между тегами запятые -->
+                    {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </div>
             <p>{{ article.article_short_description|markdown }}</p>
             <p>
                 <a href="{% url 'articles:add_like' article.id %}">

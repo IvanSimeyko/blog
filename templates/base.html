@@ -71,6 +71,10 @@
                             <h5> <a href="{% url 'about_me:me' %}"> Посмотреть информацию </a></h5>
                         </div>
                         <hr>
+                        <h5> <strong> Категории: </strong></h5>
+                        {% for article in articles %}
+                            <p> {{ article.article_tags.all|join:', ' }} </p>
+                        {% endfor %}
 
 
                     {% endblock container_right %}
