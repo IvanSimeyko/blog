@@ -8,7 +8,13 @@
 
     <h6> Дата публикации: {{ article.article_date|date:"D d N Y"  }} </h6>
     <h3> {{ article.article_title }} </h3>
-    <h6> {{ article.article_tags.all|join:", "  }} </h6>
+    <div class="tags"> <span class="glyphicon glyphicon-tags"></span>
+                {% for tag in article.article_tags.all %} <!-- делаем проход по нашим тегам -->
+                    <a href="/tag/{{ tag }}/"> {{ tag }} </a> <!-- выводим их на экран -->
+                            <!-- ставим между тегами запятые -->
+                    {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </div>
     <p> {{ article.article_text|markdown }} </p>
     <p>
         <a href="{% url 'articles:add_like' article.id %}">
@@ -57,9 +63,5 @@
               <a href="{% url 'loginsys:log_in' %}">войти</a></p>
      </div>
     {% endif %}
-
-
-
-
 
 {% endblock container %}
