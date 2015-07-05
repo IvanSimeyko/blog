@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,6 +10,12 @@
         <link rel="icon" href="../../favicon.ico">
 
         <title> {% block title %} Welcome to my block {% endblock title %} </title>
+          <style>
+              .round {
+              border-radius: 100px; /* Радиус скругления */
+              box-shadow: 0 0 0 1px grey, 0 0 13px #333; /* Параметры теней */
+              }
+          </style>
 
         <!-- Bootstrap core CSS -->
         {% load staticfiles %}
@@ -58,30 +64,38 @@
                 <div class="col-sm-9 blog-main">
                     {% block container %}
                     {% endblock container %}
+                    <div class="footer">
+                        <hr>
+                        <p>&copy; Ivan Simeyko</p>
+                    </div>
                 </div>
 
                 <div class="col-sm-3 blog-main">
                     {% block container_right %}
-                        <h5> <strong> Обо мне: </strong></h5>
+                        <div class="well">
                         <div class="media">
+                            <h5> <strong> Обо мне: </strong></h5>
                             <a class="pull-left">
-                                <img class="media-object" src="{% static 'img/ivan.jpg' %}"
+                                <img class="media-heading" src="{% static 'img/ivan.jpg' %}"
                                      width = '50' height="50" alt="my_photo">
                             </a>
-                            <h5> <a href="{% url 'about_me:me' %}"> Посмотреть информацию </a></h5>
+                            <p> Ivan Simeyko </p>
+                            <h5> <a href="{% url 'about_me:me' %}"> Читать далее... </a></h5>
+                        </div>
                         </div>
                         <hr>
-                        <h5> <strong> Категории: </strong></h5>
-                        {% for article in articles %}
-                            <p> {{ article.article_tags.all|join:', ' }} </p>
-                        {% endfor %}
-
-
+                        <div class="well">
+                            <h5> <strong> Tags: </strong></h5>
+                            {% for article in articles %}
+                                <p> {{ article.article_tags.all|join:', ' }} </p>
+                            {% endfor %}
+                        </div>
                     {% endblock container_right %}
                 </div>
             </div>
         </div>
      </div>
+
 
 
 
