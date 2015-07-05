@@ -87,7 +87,7 @@
                         <div class="well">
                             <h5> <strong> Tags: </strong></h5>
                             {% for article in articles %}
-                                <p> {{ article.article_tags.all|join:', ' }} </p>
+                                <p> <a href="tag/{{ tag }}/"> {{ article.article_tags.all|join:', ' }}</a></p>
                             {% endfor %}
                         </div>
                     {% endblock container_right %}

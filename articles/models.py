@@ -12,10 +12,10 @@ class Category(models.Model):
 
 
 class Tag(models.Model):
-    slug = models.SlugField(max_length=200, unique=True, null=True, blank=True)
+    name = models.CharField(max_length=200, null=True, blank=True)
 
-    def __str__(self):
-        return self.slug
+    def __unicode__(self):
+        return self.name
 
 
 class ArticleQuerySet(models.QuerySet):

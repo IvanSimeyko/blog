@@ -10,7 +10,7 @@
     <h3> {{ article.article_title }} </h3>
     <div class="tags"> <span class="glyphicon glyphicon-tags"></span>
                 {% for tag in article.article_tags.all %} <!-- делаем проход по нашим тегам -->
-                    <a href="/tag/{{ tag }}/"> {{ tag }} </a> <!-- выводим их на экран -->
+                    <a href="{% url 'tag' tag.id %}"> {{ tag }} </a> <!-- выводим их на экран -->
                             <!-- ставим между тегами запятые -->
                     {% if not forloop.last %}, {% endif %}
                 {% endfor %}

@@ -13,5 +13,5 @@ urlpatterns = patterns('',
     url(r'^foundation/', include('foundations.urls', namespace="foundation")),
     url(r'^about_me/', include('about_me.urls', namespace="about_me")),
     url(r'^category/(?P<pk>\d+)/$', views.category, name='category'),
-    #url(r'^tag/(?P<id>\d+)/$', tag),
+    url(r'^tag/(?P<pk>\d+)/$', views.tag, name='tag'),
     )
