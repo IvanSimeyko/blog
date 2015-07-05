@@ -2,7 +2,8 @@
 
 {% block title %} {{ category.name }} {% endblock title %}
 
-{% block nav_class_category.name %} active {% endblock %}
+{% block nav_class_engineering %} {% ifequal category.name "engineering" %} active {% endifequal %} {% endblock %}
+{% block nav_class_programming %} {% ifequal category.name "programming" %} active {% endifequal %} {% endblock %}
 
 {% load django_markdown %}
 
