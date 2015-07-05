@@ -12,6 +12,6 @@ urlpatterns = patterns('',
     url(r'^auth/', include('loginsys.urls', namespace="loginsys")),
     url(r'^foundation/', include('foundations.urls', namespace="foundation")),
     url(r'^about_me/', include('about_me.urls', namespace="about_me")),
-    url(r'^category/(?P<pk>\d+)/$', views.category_eng, name='category_eng'),
+    url(r'^category/(?P<pk>\d+)/$', views.category, name='category'),
     #url(r'^tag/(?P<id>\d+)/$', tag),
     )

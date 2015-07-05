@@ -9,7 +9,7 @@ def home(request):
     return render(request, 'base.html', {'articles': articles})
 
 
-def category_eng(request, pk):
+def category(request, pk):
     # делаем выборку выбранной категории
     category = get_object_or_404(Category, id=pk)
     # выбираем все статьи по выбранной категории
