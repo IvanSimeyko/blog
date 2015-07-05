@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from articles.models import Article, Category
 
@@ -10,7 +11,7 @@ def home(request):
 
 def category_eng(request, pk):
     # делаем выборку выбранной категории
-    category = get_object_or_404(Category, pk=id)
+    category = get_object_or_404(Category, id=pk)
     # выбираем все статьи по выбранной категории
     posts = category.article_set.all()
     # возвращаем выбранную категорию и статьи в шаблон category.html
