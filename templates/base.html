@@ -64,32 +64,14 @@
                 <div class="col-sm-9 blog-main">
                     {% block container %}
                     {% endblock container %}
-                    <div class="footer">
-                        <hr>
-                        <p>&copy; Ivan Simeyko</p>
-                    </div>
+
+                    <hr>
+                    <p>&copy; Ivan Simeyko</p>
+
                 </div>
 
                 <div class="col-sm-3 blog-main">
                     {% block container_right %}
-                        <div class="well">
-                        <div class="media">
-                            <h5> <strong> Обо мне: </strong></h5>
-                            <a class="pull-left">
-                                <img class="media-heading" src="{% static 'img/ivan.jpg' %}"
-                                     width = '50' height="50" alt="my_photo">
-                            </a>
-                            <p> Ivan Simeyko </p>
-                            <h5> <a href="{% url 'about_me:me' %}"> Читать далее... </a></h5>
-                        </div>
-                        </div>
-                        <hr>
-                        <div class="well">
-                            <h5> <strong> Tags: </strong></h5>
-                            {% for article in articles %}
-                                <p> <a href="tag/{{ tag }}/"> {{ article.article_tags.all|join:', ' }}</a></p>
-                            {% endfor %}
-                        </div>
                     {% endblock container_right %}
                 </div>
             </div>

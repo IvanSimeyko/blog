@@ -4,10 +4,10 @@ from django.shortcuts import render, get_object_or_404
 from articles.models import Article, Category, Tag
 
 
-def home(request):
-    articles = Article.objects.all()
-
-    return render(request, 'base.html', {'articles': articles})
+#def home(request):
+#   article_list = Article.objects.all()
+    #tags_list = article_list.article_set.all()
+#    return render(request, 'base.html', {'article_list': article_list})
 
 
 def category(request, pk):

@@ -1,4 +1,4 @@
-from models import Article
+from models import Article, Tag
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.core.exceptions import ObjectDoesNotExist
@@ -18,7 +18,8 @@ class ArticleListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
-        #context['articles'] = Article.objects.all().order_by('id').reverse()
+        context['tags'] = Tag.objects.all().order_by('name')
+        context['popular_articles'] = Article.objects.all().order_by('-article_likes')[:5]
         context['username'] = auth.get_user
         return context
 
