@@ -83,13 +83,14 @@
     <div class="well">
         <h5> <strong> Tags: </strong></h5>
         {% for tag in tags %}
-            <p><a href="{% url 'tag' tag.id %}"> {{ tag.name }} {{ tag.count }}</a></p>
+            <a href="{% url 'tag' tag.id %}"> {{ tag.name }} {{ tag.count }}</a>
+            {% if not forloop.last %}, {% endif %}
         {% endfor %}
     </div>
      <hr>
 
         <div class="well">
-            <h5> <strong> Popular: </strong></h5>
+            <h5> <strong> Best articles: </strong></h5>
             {% for article in popular_articles %}
                 <p> <a href="{% url 'articles:article_detail' article.id %}" > {{article.article_title  }} </a> <hr> </p>
             {% endfor %}
