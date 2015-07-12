@@ -2,7 +2,11 @@
 
 {% load staticfiles %}
 
+{% block title %} {{ article.article_title }} {% endblock title %}
+
 {% load django_markdown %}
+
+{% load sidebar %}
 
 {% block container %}
 

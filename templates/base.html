@@ -23,6 +23,8 @@
 
         <!-- Custom styles for this template -->
         <link href="starter-template.css" rel="stylesheet">
+
+        {% load sidebar %}
     </head>
 
   <body>
@@ -72,7 +74,9 @@
 
                 <div class="col-sm-3 blog-main">
                     {% block container_right %}
+                    {% show_sidebar %}
                     {% endblock container_right %}
+
                 </div>
             </div>
         </div>

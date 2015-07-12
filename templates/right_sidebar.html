@@ -1,0 +1,33 @@
+{% load staticfiles %}
+
+
+<div class="well">
+    <div class="media">
+        <h5> <strong> About me: </strong></h5>
+        <a class="pull-left">
+            <img class="round" src="{% static 'img/ivan.jpg' %}"
+                 width = '50' height="50" alt="my_photo">
+        </a>
+        <p> Ivan Simeyko </p>
+        <h5> <a href="{% url 'about_me:me' %}"> Read more... </a></h5>
+    </div>
+    </div>
+    <hr>
+
+    <div class="well">
+        <h5> <strong> Tags: </strong></h5>
+        {% for tag in tags %}
+            <a href="{% url 'tag' tag.id %}"> {{ tag.name }} </a>
+            {% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </div>
+     <hr>
+
+        <div class="well">
+            <h5> <strong> Best articles: </strong></h5>
+            {% for article in popular_articles %}
+                <p>
+                    <a href="{% url 'articles:article_detail' article.id %}"> {{ article.article_title }} </a>
+                </p>
+            {% endfor %}
+        </div>
