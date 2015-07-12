@@ -21,8 +21,8 @@ def category(request, pk):
 
 
 def tag(request, pk):
-    category = get_object_or_404(Tag, id=pk)
-    posts = category.article_set.all()
+    tag = get_object_or_404(Tag, id=pk)
+    posts = tag.article_set.all()
     return render(request, 'tagpage.html', {'posts': posts,
-                                            'category': category})
+                                            'tag': tag})
 

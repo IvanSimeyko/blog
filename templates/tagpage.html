@@ -11,12 +11,44 @@
 
 {% block container %}
 
-   <h4> Список статей в категории {{ category.name }} </h4>
+    {% if category %}
+        <h4> Список статей в категории {{ category.name }} </h4>
 
-    {% for post in posts %}
-        <p> {{ post.article_date|date:"d N Y"}}
-            <a href="{% url 'articles:article_detail' post.id %}"> {{ post.article_title }} </a></p>
+        {% for article in posts %}
+            <div class="well">
+                <h6> Дата публикации: {{ article.article_date|date:"d N Y" }} </h6>
 
-    {% endfor %}
+                <h3>{{ article.article_title }}</h3>
+
+                <div class="tags"> <span class="glyphicon glyphicon-tags"></span>
+                    {% for tag in article.article_tags.all %}
+                        <a href="{% url 'tag' tag.id %}"> {{ tag }} </a> <!-- выводим их на экран -->
+                                <!-- ставим между тегами запятые -->
+                        {% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </div>
+                <p>{{ article.article_short_description|markdown }}</p>
+                <p>
+                    <a href="{% url 'articles:add_like' article.id %}">
+                        <img class="pull-left" src="{% static 'img/likes.jpg' %}" width="17" height="17">
+                    </a>
+                    <small> {{ article.article_likes }} </small>
+
+                    <a class="btn btn-primary pull-right" href="{% url 'articles:article_detail' article.id %}" role="button">
+                        Read more...</a>
+                </p>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+        {% if tag %}
+        <h4> Список статей с тегом {{ tag.name }} </h4>
+
+        {% for post in posts %}
+            <p> {{ post.article_date|date:"d N Y" }}
+                <a href="{% url 'articles:article_detail' post.id %}"> {{ post.article_title }} </a>
+            </p>
+        {% endfor %}
+    {% endif %}
 
 {% endblock container %}
