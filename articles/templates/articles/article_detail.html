@@ -42,7 +42,7 @@
         {% for comment in comment %}
             <h5><b>{{ comment.comment_name.username }}</b></h5>
             <h6>{{ comment.comment_date }}</h6>
-            <p>{{ comment.comment_text }}</p>
+            <p>{{ comment.comment_text|markdown }}</p>
             <hr>
         {% endfor %}
      </div>
@@ -54,7 +54,8 @@
         <form action="{% url 'articles:add_comment' article.id %}" method="post">
             {% csrf_token %}
             <table class="table table-responsive">
-                 {{ form.as_table }}
+
+                {{ form.as_table }}
             </table>
 
             <div class="col-sm-offset-6 col-sm-6">

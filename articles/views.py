@@ -32,8 +32,7 @@ class ArticleDetailView(DetailView):
         context.update(csrf(request=True))
         article = self.get_object()
         context['comment'] = article.comment_set.all()
-        comment_form = CommentForm
-        context['form'] = comment_form
+        context['form'] = CommentForm
         context['username'] = auth.get_user
         return context
 
