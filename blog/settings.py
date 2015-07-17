@@ -92,3 +92,16 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates'), 'loginsys/templates/loginsys']
+
+
+EMAIL_HOST = "smtp.gmail.com"
+
+EMAIL_PORT = 465
+
+EMAIL_HOST_USER = "a@gmail.com"
+
+EMAIL_HOST_PASSWORD = "mailpass"
+
+EMAIL_USE_TLS = 1
+
+ADMINS = (('Ivan', 'iv.simeyko@gmail.com'),)
