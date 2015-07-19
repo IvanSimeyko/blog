@@ -11,8 +11,10 @@
 {% block container %}
 
     {% for me in about_me %}
-        <p>
+
+        <div class="well">
            {{ me.info|markdown  }}
-        </p>
+        </div>
+
     {% endfor %}
 {% endblock container %}

@@ -27,11 +27,11 @@ class ContactCreateView(CreateView):
 
     def form_valid(self, form):
         form = super(ContactCreateView, self).form_valid(form)
-        name = self.object.name
-        subject = self.object.subject
-        message = self.object.body
-        email = self.object.email
-        date = self.object.date
+        name = self.object.contact_name
+        subject = self.object.contact_subject
+        message = self.object.contact_text
+        email = self.object.contact_email
+        date = self.object.contact_date
         mail_admins(subject, message, fail_silently=False, connection=None, html_message=None)
         messages.success(self.request, 'Mail from %s successfully send' % name)
         return form
