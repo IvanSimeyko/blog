@@ -33,6 +33,7 @@ def logout(request):
 
 class UserCreateForm(UserCreationForm):
     email = forms.EmailField(required=True)
+    subscribe = forms.BooleanField(required=True)
 
     class Meta:
         model = User
