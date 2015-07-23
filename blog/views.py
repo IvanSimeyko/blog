@@ -22,7 +22,7 @@ def category(request, pk):
 
 def tag(request, pk):
     tag = get_object_or_404(Tag, id=pk)
-    posts = tag.article_set.all()
+    posts = tag.article_set.published
     return render(request, 'tagpage.html', {'posts': posts,
                                             'tag': tag})
 
