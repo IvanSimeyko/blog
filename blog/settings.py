@@ -106,3 +106,10 @@ EMAIL_HOST_PASSWORD = "mailpass"
 EMAIL_USE_TLS = 1
 
 ADMINS = (('Ivan', 'iv.simeyko@gmail.com'),)
+
+'''
+try:
+    from local_settings import *
+except ImportError:
+    print 'Warning! local_settings are not defined!'
+'''

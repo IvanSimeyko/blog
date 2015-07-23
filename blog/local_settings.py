@@ -1,0 +1,4 @@
+# SECRET_KEY = 'ingener'
+DEBUG = False
+TEMPLATE_DEBUG = False
+ALLOWED_HOSTS = [‘46.101.137.225’]
