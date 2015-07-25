@@ -33,7 +33,7 @@ def logout(request):
 
 class UserCreateForm(UserCreationForm):
     email = forms.EmailField(required=True)
-    subscribe = forms.BooleanField(required=True)
+    subscribe = forms.BooleanField(required=True, label="Подписаться на обновления блога")
 
     class Meta:
         model = User
