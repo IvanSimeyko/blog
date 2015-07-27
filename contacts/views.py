@@ -2,7 +2,7 @@
 from models import Contact
 from django import forms
 from django.contrib import messages
-from django.views.generic.edit import FormView, CreateView
+from django.views.generic.edit import CreateView
 from django.core.mail import mail_admins
 
 
@@ -18,7 +18,7 @@ class ContactForm(forms.ModelForm):
 class ContactCreateView(CreateView):
     model = Contact
     form_class = ContactForm
-    success_url = '#'
+    success_url = '/contact/'
 
     def get_context_data(self, **kwargs):
         context = super(ContactCreateView, self).get_context_data(**kwargs)

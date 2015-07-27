@@ -97,15 +97,16 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates'), 'loginsys/templates/logins
 
 EMAIL_HOST = "smtp.gmail.com"
 
-EMAIL_PORT = 465
+EMAIL_PORT = 587
 
-EMAIL_HOST_USER = "a@gmail.com"
+EMAIL_SUBJECT_PREFIX = 'My blog: '
+EMAIL_HOST_USER = 'iv.simeyko'
 
-EMAIL_HOST_PASSWORD = "mailpass"
+EMAIL_HOST_PASSWORD = 'engener29'
 
-EMAIL_USE_TLS = 1
+EMAIL_USE_TLS = True
 
-ADMINS = (('Ivan', 'iv.simeyko@gmail.com'),)
+ADMINS = (('Ivan', 'iv.simeyko@gmail.com'), )
 
 '''
 try:
