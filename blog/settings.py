@@ -105,7 +105,7 @@ EMAIL_SUBJECT_PREFIX = 'From My blog: '
 
 EMAIL_HOST_USER = 'iv.simeyko@gmail.com'
 
-EMAIL_HOST_PASSWORD = 'engener29'
+EMAIL_HOST_PASSWORD = ''
 
 
 ADMINS = (('Ivan', 'iv.simeyko@gmail.com'), )
