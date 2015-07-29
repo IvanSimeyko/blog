@@ -95,16 +95,18 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates'), 'loginsys/templates/logins
 
 #STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
+EMAIL_USE_TLS = True
+
 EMAIL_HOST = "smtp.gmail.com"
 
 EMAIL_PORT = 587
 
-EMAIL_SUBJECT_PREFIX = 'My blog: '
-EMAIL_HOST_USER = 'iv.simeyko'
+EMAIL_SUBJECT_PREFIX = 'From My blog: '
+
+EMAIL_HOST_USER = 'iv.simeyko@gmail.com'
 
 EMAIL_HOST_PASSWORD = 'engener29'
 
-EMAIL_USE_TLS = True
 
 ADMINS = (('Ivan', 'iv.simeyko@gmail.com'), )
 
