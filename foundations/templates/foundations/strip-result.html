@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title %} {{ page_title }} {% endblock title %}
+
+{% load django_markdown %}
+
+{% block container %}
+
+    <h3 class="text-center"> {{ page_title }}</h3>
+
+    <div class="container-fluid">
+
+        <img class='img-responsive img-thumbnail center-block' src="{% static 'img/strip_found.png' %}" width="50%" height="50%">
+
+    <form method = 'get'>
+
+        <table class="table table-responsive">
+
+            {{ form.as_table }}
+
+        </table>
+
+        <input type="Submit" value="Вычислить">
+    </form>
+
+    <br />
+    <p> {{ result }} </p>
+    </div>
+
+{% endblock container %}

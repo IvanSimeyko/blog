@@ -8,9 +8,13 @@
 
 
 {% block container %}
-<h3>Проверка напряжений под подошвой фундамента при действии изгибающего момента в одном направлении</h3>
 
-    <p><img src="{% static 'img/fund.jpg' %}" width="750" height="400"></p>
+        <h3 class="text-center">Проверка напряжений под подошвой фундамента при действии изгибающего момента в одном направлении</h3>
+
+    <p>
+        <img class='img-responsive img-thumbnail center-block' src="{% static 'img/fund.jpg' %}" width="750" height="400">
+    </p>
+
     <form method = 'get'>
         <table class="table table-responsive">
             {{ form.as_table }}
