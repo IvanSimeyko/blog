@@ -110,9 +110,8 @@ EMAIL_HOST_PASSWORD = ''
 
 ADMINS = (('Ivan', 'iv.simeyko@gmail.com'), )
 
-'''
+
 try:
     from local_settings import *
 except ImportError:
     print 'Warning! local_settings are not defined!'
-'''
