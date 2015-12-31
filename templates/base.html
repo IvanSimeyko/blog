@@ -52,10 +52,10 @@
                 </ul>
                 <ul class="nav nav-pills pull-right">
                     {% if user.username %}
-                        <li><a href="{% url 'loginsys:log_out' %}"> Выйти {{ user.username }}</a></li>
+                        <li><a href="{% url 'loginsys:log_out' %}"> Log Out {{ user.username }}</a></li>
                     {% else %}
-                        <li><a href="{% url 'loginsys:log_in' %}"> Войти </a></li>
-                        <li><a href="{% url 'loginsys:register' %}"> Зарегистрироваться </a></li>
+                        <li><a href="{% url 'loginsys:log_in' %}"> Log In </a></li>
+                        <li><a href="{% url 'loginsys:register' %}"> Sign Up </a></li>
                     {% endif %}
                 </ul>
             </div><!--/.nav-collapse -->
@@ -82,7 +82,10 @@
 
      <footer class="panel-footer">
          <div class="container">
-             <p>&copy; Ivan Simeyko 2015</p>
+             <p>
+                 <span class="left">&copy; Ivan Simeyko 2015-2016</span>
+                 <span class="pull-right"><a href="#">Back to top</a></span>
+             </p>
          </div>
      </footer>
 

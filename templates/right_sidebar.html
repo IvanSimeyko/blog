@@ -32,7 +32,21 @@
             {% endfor %}
         </div>
 
-     <hr>
+    <hr>
+
+    <div class="well">
+        <h5> <strong> Last comments: </strong></h5>
+        {% for comments in last_comment %}
+            <p>
+                {{ comments.comment_name }}:
+            </p>
+            <p>
+                <a href="{% url 'articles:article_detail' comments.comment_article.id %}#comments"> {{ comments.comment_text }} </a>
+            </p>
+        {% endfor %}
+    </div>
+
+    <hr>
 
     <div class="well">
          <div class="media">
