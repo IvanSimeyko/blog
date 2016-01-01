@@ -1,5 +1,7 @@
 {% load staticfiles %}
 
+{% load django_markdown %}
+
 
 <div class="well">
     <div class="media">
@@ -41,7 +43,7 @@
                 {{ comments.comment_name }}:
             </p>
             <p>
-                <a href="{% url 'articles:article_detail' comments.comment_article.id %}#comments"> {{ comments.comment_text }} </a>
+                <a href="{% url 'articles:article_detail' comments.comment_article.id %}#comments"> {{ comments.comment_text|markdown }} </a>
             </p>
         {% endfor %}
     </div>

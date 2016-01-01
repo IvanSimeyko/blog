@@ -11,22 +11,25 @@
 {% block container %}
 
     <div class="well">
-    <h6> Дата публикации: {{ article.article_date|date:"D d N Y"  }} </h6>
-    <h3> {{ article.article_title }} </h3>
-    <div class="tags"> <span class="glyphicon glyphicon-tags"></span>
-                {% for tag in article.article_tags.all %} <!-- делаем проход по нашим тегам -->
-                    <a href="{% url 'tag' tag.id %}"> {{ tag }} </a> <!-- выводим их на экран -->
-                            <!-- ставим между тегами запятые -->
-                    {% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            </div>
-    <p> {{ article.article_text|markdown }} </p>
-    <p>
-        <a href="{% url 'articles:add_like' article.id %}">
-            <img src="{% static 'img/likes.jpg' %}" width="15" height="15"> </a>
-        <small>{{ article.article_likes }}</small></p>
+        <h6> Дата публикации: {{ article.article_date|date:"D d N Y"  }} </h6>
+        <h3> {{ article.article_title }} </h3>
+        <div class="tags"> <span class="glyphicon glyphicon-tags"></span>
+                    {% for tag in article.article_tags.all %} <!-- делаем проход по нашим тегам -->
+                        <a href="{% url 'tag' tag.id %}"> {{ tag }} </a> <!-- выводим их на экран -->
+                                <!-- ставим между тегами запятые -->
+                        {% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+         </div>
+        <p> {{ article.article_text|markdown }} </p>
+        <p>
+            <a href="{% url 'articles:add_like' article.id %}">
+                <img src="{% static 'img/likes.jpg' %}" width="15" height="15"> </a>
+            <small>{{ article.article_likes }}</small>
+        </p>
     </div>
+
     <hr>
+
     <p id='comments'>Комментарии:</p>
 
     {% if messages %}
@@ -52,23 +55,35 @@
         <p>Пока нет комментариев...</p>
      {% endif %}
 
-     {% if user.username %}
-        <form action="{% url 'articles:add_comment' article.id %}" method="post">
-            {% csrf_token %}
-            <table class="table table-responsive">
+    {% if user.username %}
+        <div class="container-fluid">
+            <form action="{% url 'articles:add_comment' article.id %}" method="post">
+               {% csrf_token %}
+               <table class="table table-responsive">
+                   {{ form.as_table }}
+               </table>
 
-                {{ form.as_table }}
-            </table>
+                <div class="col-sm-offset-9 col-sm-9">
+                    <input type="Submit" class="btn btn-primary btn-sm" value="Add comment">
+                </div>
 
-            <div class="col-sm-offset-6 col-sm-6">
-            <input type="Submit" class="btn btn-primary btn-sm" value="Добавить комментарий">
-            </div>
-        </form>
-     {% else %}
-         <div class="well well-sm">
-          <p> Чтобы иметь возможность комментировать данную статью Вам необходимо
-              <a href="{% url 'loginsys:log_in' %}">войти</a></p>
-     </div>
+                    <h5>При написанни комментариев можно использовать HTML теги и атрибуты, например:
+                    <code>&lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;
+                          acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt;
+                          &lt;code class=&quot;&quot; title=&quot;&quot; data-url=&quot;&quot;&gt; &lt;
+                          del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt;
+                          &lt;strong&gt; &lt;pre class=&quot;&quot; title=&quot;&quot; data-url=&quot;&quot;&gt; &lt;
+                          span class=&quot;&quot; title=&quot;&quot; data-url=&quot;&quot;&gt; </code>
+                    </h5>
+                
+            </form>
+         </div>
+    {% else %}
+        <div class="well well-sm">
+            <p> Чтобы иметь возможность комментировать данную статью Вам необходимо
+                 <a href="{% url 'loginsys:log_in' %}">войти</a>
+            </p>
+        </div>
     {% endif %}
 
 {% endblock container %}
