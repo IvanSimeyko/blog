@@ -6,9 +6,10 @@ from django.shortcuts import render
 
 class StripFoundationForM(forms.Form):
 
-    R = forms.FloatField(label='Расчетное сопротивления грунта', initial='т/м2')
-    N = forms.FloatField(label='Нагрузка на фундамент', initial='т/м.пог')
-    h = forms.FloatField(label='Высота ленточного фундамента', initial='м')
+    R = forms.FloatField(label='Расчетное сопротивления грунта (т/м2)', initial='т/м2')
+    N = forms.FloatField(label='Нагрузка на фундамент(т/м.пог)', initial='т/м.пог')
+    h = forms.FloatField(label='Глубина заложения фундамента (м)', initial='м')
+    y = forms.FloatField(label='Объемный вес грунта над фундаментом (т/м3)', initial='т/м3')
 
     def clean(self):
         data = self.cleaned_data
@@ -17,8 +18,17 @@ class StripFoundationForM(forms.Form):
         return data
 
 
-def width(R, N, h):
-    width = N/(R-2.0*h)
+def width(R, N, h, y):
+    """
+    Определение ширины фундамента
+    """
+    # определяем бытовое давление
+    G = y * h
+    # рачетное сопротивление грунта
+    width = N/(R-G)
+    # вывод результата
+    if width < 0:
+        return 'Некорректно введены данные'
     return 'Требуемая ширина подошвы = %.2f м.' % width
 
 
@@ -30,7 +40,9 @@ def strip_foundation(request):
             R = form.cleaned_data.get('R')
             N = form.cleaned_data.get('N')
             h = form.cleaned_data.get('h')
-            result = width(R, N, h)
+            y = form.cleaned_data.get('y')
+
+            result = width(R, N, h, y)
             return render(request, "foundations/strip-result.html", {
                 'form': form,
                 'result': result,
